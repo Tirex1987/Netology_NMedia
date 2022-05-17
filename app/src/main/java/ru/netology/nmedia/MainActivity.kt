@@ -22,14 +22,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.likesIcon.setOnClickListener {
             viewModel.onLikeClicked()
-            /*post.likedByMe = !post.likedByMe
-            if (post.likedByMe) post.likes++ else post.likes--
-            binding.likes.text = getAmountFormat(post.likes)
-            binding.likesIcon.setImageResource(getLikeIconResId(post.likedByMe))*/
         }
 
         binding.shareIcon.setOnClickListener {
-            //        binding.share.text = getAmountFormat(++post.share)
             viewModel.onShareClicked()
         }
     }
