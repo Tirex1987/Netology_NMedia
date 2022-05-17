@@ -2,36 +2,35 @@ package ru.netology.nmedia
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import ru.netology.nmedia.databinding.PostListItemBinding
+import ru.netology.nmedia.viewModel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
+
+    private val viewModel by viewModels<PostViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val binding = PostListItemBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val post = Post(
-            id = 0L,
-            author = "Andrey",
-            content = "Homework",
-            published = "16.05.2022",
-            likes = 999,
-            share = 8_997,
-            views = 1_399_500
-        )
-
-        binding.render(post)
+        viewModel.data.observe(this) { post ->
+            binding.render(post)
+        }
 
         binding.likesIcon.setOnClickListener {
-            post.likedByMe = !post.likedByMe
+            viewModel.onLikeClicked()
+            /*post.likedByMe = !post.likedByMe
             if (post.likedByMe) post.likes++ else post.likes--
             binding.likes.text = getAmountFormat(post.likes)
-            binding.likesIcon.setImageResource(getLikeIconResId(post.likedByMe))
+            binding.likesIcon.setImageResource(getLikeIconResId(post.likedByMe))*/
         }
 
         binding.shareIcon.setOnClickListener {
-            binding.share.text = getAmountFormat(++post.share)
+            //        binding.share.text = getAmountFormat(++post.share)
+            viewModel.onShareClicked()
         }
     }
 
