@@ -1,0 +1,10 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "author": "Название автора поста",
+      "authorAvatar": "@sample:posts_avatars",
+      "published": "13.05.2022"
+    }
+  ]
+}
