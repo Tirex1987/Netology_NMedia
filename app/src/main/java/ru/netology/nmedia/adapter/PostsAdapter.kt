@@ -1,7 +1,8 @@
-package ru.netology.nmedia.recyclerViewListAdapter
+package ru.netology.nmedia.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -13,8 +14,7 @@ import ru.netology.nmedia.databinding.CardPostBinding
 //typealias onLikeClicked = (post: Post) -> Unit
 
 internal class PostsAdapter (
-    private val onLikeClicked: (Post) -> Unit,
-    private val onShareClicked: (Post) -> Unit
+    private val interactionListener: PostInteractionListener
 ) : ListAdapter<Post, PostsAdapter.ViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,9 +30,29 @@ internal class PostsAdapter (
 
     inner class ViewHolder(private val binding: CardPostBinding) : RecyclerView.ViewHolder(binding.root) {
         private lateinit var post: Post
+
+        private val popupMenu by lazy {
+            PopupMenu(itemView.context, binding.options).apply {
+                inflate(R.menu.options_post)
+                setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.remove -> {
+                            interactionListener.onRemoveClicked(post)
+                            true
+                        }
+                        R.id.edit -> {
+                            interactionListener.onEditClicked(post)
+                            true
+                        }
+                        else -> false
+                    }
+                }
+            }
+        }
+
         init {
-            binding.likesIcon.setOnClickListener{ onLikeClicked(post) }
-            binding.shareIcon.setOnClickListener{ onShareClicked(post) }
+            binding.likesIcon.setOnClickListener{ interactionListener.onLikeClicked(post) }
+            binding.shareIcon.setOnClickListener{ interactionListener.onShareClicked(post) }
         }
 
         fun bind(post: Post) {
@@ -45,6 +65,8 @@ internal class PostsAdapter (
                 likes.text = getAmountFormat(post.likes)
                 share.text = getAmountFormat(post.share)
                 views.text = getAmountFormat(post.views)
+                options.setOnClickListener { popupMenu.show() }
+                avatar.setImageResource(R.drawable.ic_launcher_foreground)
             }
         }
 
