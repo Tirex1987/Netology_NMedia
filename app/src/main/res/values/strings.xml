@@ -6,4 +6,6 @@
     <string name="post_hint">Post text</string>
     <string name="save_description">Button save</string>
     <string name="menu_edit">Edit</string>
+    <string name="cancel_description">Cancel button</string>
+    <string name="edit_post">Edit post</string>
 </resources>

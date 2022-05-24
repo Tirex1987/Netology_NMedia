@@ -31,6 +31,10 @@ class PostViewModel : ViewModel(), PostInteractionListener {
         currentPost.value = null
     }
 
+    fun onCancelButtonClicked() {
+        currentPost.value = null
+    }
+
     // region PostInteractionListener
 
     override fun onLikeClicked(post: Post) =
@@ -44,7 +48,6 @@ class PostViewModel : ViewModel(), PostInteractionListener {
 
     override fun onEditClicked(post: Post) {
         currentPost.value = post
-
     }
 
     // endregion PostInteractionListener

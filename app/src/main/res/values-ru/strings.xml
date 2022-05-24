@@ -5,4 +5,5 @@
     <string name="remove">Удалить</string>
     <string name="post_hint">Текст поста</string>
     <string name="menu_edit">Изменить</string>
+    <string name="edit_post">Редактировать пост</string>
 </resources>
