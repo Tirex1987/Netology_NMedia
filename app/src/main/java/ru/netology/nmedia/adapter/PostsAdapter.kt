@@ -56,8 +56,8 @@ internal class PostsAdapter (
         }
 
         init {
-            binding.likesIcon.setOnClickListener{ interactionListener.onLikeClicked(post) }
-            binding.shareIcon.setOnClickListener{ interactionListener.onShareClicked(post) }
+            binding.likes.setOnClickListener{ interactionListener.onLikeClicked(post) }
+            binding.shares.setOnClickListener{ interactionListener.onShareClicked(post) }
         }
 
         fun bind(post: Post) {
@@ -66,12 +66,12 @@ internal class PostsAdapter (
                 authorName.text = post.author
                 content.text = post.content
                 published.text = post.published
-                likesIcon.setImageResource(getLikeIconResId(post.likedByMe))
                 likes.text = getAmountFormat(post.likes)
-                share.text = getAmountFormat(post.share)
+                shares.text = getAmountFormat(post.share)
                 views.text = getAmountFormat(post.views)
                 options.setOnClickListener { popupMenu.show() }
                 avatar.setImageResource(R.drawable.ic_launcher_foreground)
+                likes.isChecked = post.likedByMe
             }
         }
 

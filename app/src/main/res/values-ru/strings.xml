@@ -8,4 +8,5 @@
     <string name="edit_post">Редактировать пост</string>
     <string name="save_description">Сохранить</string>
     <string name="cancel_description">Отменить</string>
+    <string name="description_post_like">Нравится</string>
 </resources>
