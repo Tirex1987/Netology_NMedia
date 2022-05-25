@@ -6,4 +6,6 @@
     <string name="post_hint">Текст поста</string>
     <string name="menu_edit">Изменить</string>
     <string name="edit_post">Редактировать пост</string>
+    <string name="save_description">Сохранить</string>
+    <string name="cancel_description">Отменить</string>
 </resources>

@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity() {
                     requestFocus()
                     showKeyboard()
                 } else {
+                    binding.editPostGroup.visibility = View.GONE
                     clearFocus()
                     hideKeyboard()
                 }
@@ -55,13 +56,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.cancelButton.setOnClickListener {
-            with(binding.contentEditText) {
-                viewModel.onCancelButtonClicked()
-
-                binding.editPostGroup.visibility = View.GONE
-                clearFocus()
-                hideKeyboard()
-            }
+            viewModel.onCancelButtonClicked()
         }
     }
 
