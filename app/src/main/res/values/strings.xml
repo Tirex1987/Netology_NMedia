@@ -9,4 +9,7 @@
     <string name="cancel_description">Cancel button</string>
     <string name="edit_post">Edit post</string>
     <string name="description_post_like">Like</string>
+    <string name="chooser_share_post">Share post</string>
+    <string name="description_post_save">Save post</string>
+    <string name="add_post">Add post</string>
 </resources>

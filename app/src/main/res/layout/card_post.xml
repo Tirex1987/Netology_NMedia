@@ -85,27 +85,15 @@
         style="@style/Widget.AppTheme.ShareButton"
         tools:text="777"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/views"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:enabled="false"
         android:textColor="@color/counterTextColor"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/views_icon"
-        app:layout_constraintBottom_toBottomOf="@id/views_icon"
+        app:layout_constraintTop_toBottomOf="@id/content"
+        style="@style/Widget.AppTheme.Views"
         tools:text="10"  />
-
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/views_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="8dp"
-        android:paddingEnd="4dp"
-        android:src="@drawable/ic_views_24dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintEnd_toStartOf="@id/views"
-        app:layout_constraintTop_toTopOf="@id/likes"
-        app:layout_constraintBottom_toBottomOf="@id/likes"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,4 +9,7 @@
     <string name="save_description">Сохранить</string>
     <string name="cancel_description">Отменить</string>
     <string name="description_post_like">Нравится</string>
+    <string name="chooser_share_post">Поделиться</string>
+    <string name="description_post_save">Сохранить пост</string>
+    <string name="add_post">Добавить пост</string>
 </resources>
