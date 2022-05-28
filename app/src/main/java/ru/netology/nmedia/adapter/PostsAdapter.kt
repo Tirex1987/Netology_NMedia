@@ -12,10 +12,13 @@ import androidx.core.view.get
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import ru.netology.nmedia.Post
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.databinding.CardPostBinding
+import ru.netology.nmedia.utils.VideoPreview
+import ru.netology.nmedia.utils.setVideoPreview
 
 //typealias onLikeClicked = (post: Post) -> Unit
 
@@ -77,6 +80,7 @@ internal class PostsAdapter (
                     videoGroup.visibility = View.GONE
                 } else {
                     videoGroup.visibility = View.VISIBLE
+                    video.setVideoPreview(post.videoUrl)
                     videoTitle.setText(post.videoTitle)
                     play.setOnClickListener{ interactionListener.onPlayClicked(post) }
                     video.setOnClickListener{ play.callOnClick() }

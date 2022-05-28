@@ -18,9 +18,17 @@ class PostRepositoryInMemory : PostRepository {
                 id = ++lastId,
                 author = "Andrey",
                 content = "Homework\nBla-bla-bla, Bla-bla-bla $lastId",
-                published = "16.05.2022",
+                published = "28.05.2022",
                 videoUrl = "https://www.youtube.com/watch?v=F7MJJeDTd7E",
-                videoTitle = "Video title"
+                videoTitle = "Youtube video"
+            ),
+            Post(
+                    id = ++lastId,
+            author = "Andrey",
+            content = "Homework\nBla-bla-bla, Bla-bla-bla $lastId",
+            published = "28.05.2022",
+            videoUrl = "https://rutube.ru/video/88b8f487354de842f2d4efef3bdd0bac/",
+            videoTitle = "Rutube video"
             )
         ) +
                 List(100) { index ->

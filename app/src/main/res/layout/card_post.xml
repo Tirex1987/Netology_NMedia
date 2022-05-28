@@ -59,14 +59,13 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/video"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/video_description"
-        android:scaleType="fitCenter"
-        android:focusable="true"
+        android:layout_height="@dimen/preview_height"
         android:clickable="true"
+        android:contentDescription="@string/video_description"
+        android:focusable="true"
+        android:scaleType="fitCenter"
         app:layout_constraintTop_toBottomOf="@id/headerBarrier"
-        tools:layout_editor_absoluteX="16dp"
-        app:srcCompat="@drawable/default_preview"
+        tools:srcCompat="@drawable/default_preview"
         tools:visibility="visible" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
