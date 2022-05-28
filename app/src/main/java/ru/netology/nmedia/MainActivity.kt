@@ -1,6 +1,7 @@
 package ru.netology.nmedia
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -55,6 +56,15 @@ class MainActivity : AppCompatActivity() {
         }
         viewModel.navigateToPostContentScreenEvent.observe(this) { currentPost ->
             postContentActivityLauncher.launch(currentPost?.content)
+        }
+
+        viewModel.playVideoContent.observe(this) { url ->
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+
+            val playIntent = Intent.createChooser(
+                intent, getString(R.string.chooser_play_video)
+            )
+            startActivity(intent)
         }
     }
 

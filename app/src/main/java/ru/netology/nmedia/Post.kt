@@ -8,5 +8,7 @@ data class Post (
     val likes: Int = 0,
     val likedByMe: Boolean = false,
     val share: Int = 0,
-    val views: Int = 0
+    val views: Int = 0,
+    val videoUrl: String? = null,
+    val videoTitle: String? = null
 )

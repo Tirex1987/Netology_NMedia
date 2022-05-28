@@ -17,11 +17,12 @@ class PostViewModel : ViewModel(), PostInteractionListener {
 
     val sharePostContent = SingleLiveEvent<String>()
     val navigateToPostContentScreenEvent = SingleLiveEvent<Post?>()
+    val playVideoContent = SingleLiveEvent<String>()
 
 //    private val currentPost = MutableLiveData<Post?>(null)
 
     fun onSaveButtonClicked(content: String) {
-        if (content.isNullOrBlank()) return
+        if (content.isBlank()) return
 
         val post = navigateToPostContentScreenEvent.value?.copy(
             content = content
@@ -54,6 +55,10 @@ class PostViewModel : ViewModel(), PostInteractionListener {
 
     override fun onEditClicked(post: Post) {
         navigateToPostContentScreenEvent.value = post
+    }
+
+    override fun onPlayClicked(post: Post) {
+        playVideoContent.value = post.videoUrl ?: return
     }
 
     // endregion PostInteractionListener

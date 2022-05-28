@@ -13,17 +13,27 @@ class PostRepositoryInMemory : PostRepository {
         }
 
     override val data = MutableLiveData(
-        List(100) { index ->
+        listOf(
             Post(
                 id = ++lastId,
                 author = "Andrey",
                 content = "Homework\nBla-bla-bla, Bla-bla-bla $lastId",
                 published = "16.05.2022",
-                likes = 999,
-                share = 8_997,
-                views = 1_399_500
+                videoUrl = "https://www.youtube.com/watch?v=F7MJJeDTd7E",
+                videoTitle = "Video title"
             )
-        }
+        ) +
+                List(100) { index ->
+                    Post(
+                        id = ++lastId,
+                        author = "Andrey",
+                        content = "Homework\nBla-bla-bla, Bla-bla-bla $lastId",
+                        published = "16.05.2022",
+                        likes = 999,
+                        share = 8_997,
+                        views = 1_399_500
+                    )
+                }
     )
 
     override fun like(postId: Long) {

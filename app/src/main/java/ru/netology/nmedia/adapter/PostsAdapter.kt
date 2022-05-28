@@ -1,5 +1,6 @@
 package ru.netology.nmedia.adapter
 
+import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -72,6 +73,14 @@ internal class PostsAdapter (
                 options.setOnClickListener { popupMenu.show() }
                 avatar.setImageResource(R.drawable.ic_launcher_foreground)
                 likes.isChecked = post.likedByMe
+                if (post.videoUrl.isNullOrBlank()){
+                    videoGroup.visibility = View.GONE
+                } else {
+                    videoGroup.visibility = View.VISIBLE
+                    videoTitle.setText(post.videoTitle)
+                    play.setOnClickListener{ interactionListener.onPlayClicked(post) }
+                    video.setOnClickListener{ play.callOnClick() }
+                }
             }
         }
 
