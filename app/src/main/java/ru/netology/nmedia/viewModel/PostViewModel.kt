@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import ru.netology.nmedia.Post
 import ru.netology.nmedia.adapter.PostInteractionListener
+import ru.netology.nmedia.data.FilePostRepository
 import ru.netology.nmedia.data.PostRepository
 import ru.netology.nmedia.data.PostRepositoryInMemory
 import ru.netology.nmedia.data.SharedPrefsPostRepository
@@ -17,7 +18,7 @@ class PostViewModel(
 ) : AndroidViewModel(application), PostInteractionListener {
 
     private val repository: PostRepository =
-        SharedPrefsPostRepository(application)
+        FilePostRepository(application)
 
     val data by repository::data
 
