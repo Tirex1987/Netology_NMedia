@@ -1,9 +1,13 @@
 package ru.netology.nmedia
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.launch
 import androidx.activity.viewModels
+import ru.netology.nmedia.activity.PostContentActivity
 import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.utils.hideKeyboard
@@ -27,36 +31,40 @@ class MainActivity : AppCompatActivity() {
             adapter.submitList(posts)
         }
 
-        binding.saveButton.setOnClickListener {
-            with(binding.contentEditText) {
-                val content = text.toString()
-                viewModel.onSaveButtonClicked(content)
-
-                binding.editPostGroup.visibility = View.GONE
-                clearFocus()
-                hideKeyboard()
-            }
+        binding.fab.setOnClickListener {
+            viewModel.onAddClicked()
         }
 
-        viewModel.currentPost.observe(this) { currentPost ->
-            with(binding.contentEditText) {
-                val content = currentPost?.content
-                setText(content)
-                if (content != null) {
-                    binding.editPostGroup.visibility = View.VISIBLE
-                    binding.editPostText.setText(content)
-                    requestFocus()
-                    showKeyboard()
-                } else {
-                    binding.editPostGroup.visibility = View.GONE
-                    clearFocus()
-                    hideKeyboard()
-                }
+        viewModel.sharePostContent.observe(this) { postContent ->
+            val intent = Intent().apply{
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, postContent)
+                type = "text/plain"
             }
+
+            val shareIntent = Intent.createChooser(
+                intent, getString(R.string.chooser_share_post)
+            )
+            startActivity(shareIntent)
         }
 
-        binding.cancelButton.setOnClickListener {
-            viewModel.onCancelButtonClicked()
+        val postContentActivityLauncher = registerForActivityResult(
+            PostContentActivity.ResultContract
+        ) { postContent ->
+            postContent ?: return@registerForActivityResult
+            viewModel.onSaveButtonClicked(postContent)
+        }
+        viewModel.navigateToPostContentScreenEvent.observe(this) { currentPost ->
+            postContentActivityLauncher.launch(currentPost?.content)
+        }
+
+        viewModel.playVideoContent.observe(this) { url ->
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+
+            val playIntent = Intent.createChooser(
+                intent, getString(R.string.chooser_play_video)
+            )
+            startActivity(intent)
         }
     }
 

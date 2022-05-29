@@ -1,5 +1,6 @@
 package ru.netology.nmedia.adapter
 
+import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +12,13 @@ import androidx.core.view.get
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import ru.netology.nmedia.Post
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.databinding.CardPostBinding
+import ru.netology.nmedia.utils.VideoPreview
+import ru.netology.nmedia.utils.setVideoPreview
 
 //typealias onLikeClicked = (post: Post) -> Unit
 
@@ -72,6 +76,15 @@ internal class PostsAdapter (
                 options.setOnClickListener { popupMenu.show() }
                 avatar.setImageResource(R.drawable.ic_launcher_foreground)
                 likes.isChecked = post.likedByMe
+                if (post.videoUrl.isNullOrBlank()){
+                    videoGroup.visibility = View.GONE
+                } else {
+                    videoGroup.visibility = View.VISIBLE
+                    video.setVideoPreview(post.videoUrl)
+                    videoTitle.setText(post.videoTitle)
+                    play.setOnClickListener{ interactionListener.onPlayClicked(post) }
+                    video.setOnClickListener{ play.callOnClick() }
+                }
             }
         }
 

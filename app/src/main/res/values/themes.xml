@@ -39,4 +39,12 @@
         <item name="android:minHeight">@dimen/icon_options_size</item>
     </style>
 
+    <style name="Widget.AppTheme.Views" parent="Widget.MaterialComponents.Button.TextButton.Icon">
+        <item name="icon">@drawable/ic_views_24dp</item>
+        <item name="iconTint">@color/counterTextColor</item>
+        <item name="android:textColor">@color/counterTextColor</item>
+        <item name="android:minWidth">@dimen/icon_button_min_size</item>
+        <item name="android:minHeight">@dimen/icon_button_min_size</item>
+    </style>
+
 </resources>

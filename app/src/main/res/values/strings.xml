@@ -9,4 +9,10 @@
     <string name="cancel_description">Cancel button</string>
     <string name="edit_post">Edit post</string>
     <string name="description_post_like">Like</string>
+    <string name="chooser_share_post">Share post</string>
+    <string name="description_post_save">Save post</string>
+    <string name="add_post">Add post</string>
+    <string name="video_description">Video</string>
+    <string name="play_description">Play</string>
+    <string name="chooser_play_video">Play video</string>
 </resources>
