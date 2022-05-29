@@ -15,4 +15,6 @@
     <string name="video_description">Video</string>
     <string name="play_description">Play</string>
     <string name="chooser_play_video">Play video</string>
+    <string name="json_read_exception">Error: incorrect data in the posts file. A new file will be created, data will be lost.</string>
+    <string name="json_io_exception">Error reading posts file. A new file will be created, data will be lost.</string>
 </resources>
