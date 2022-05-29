@@ -1,5 +1,7 @@
 package ru.netology.nmedia.viewModel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -7,11 +9,15 @@ import ru.netology.nmedia.Post
 import ru.netology.nmedia.adapter.PostInteractionListener
 import ru.netology.nmedia.data.PostRepository
 import ru.netology.nmedia.data.PostRepositoryInMemory
+import ru.netology.nmedia.data.SharedPrefsPostRepository
 import ru.netology.nmedia.utils.SingleLiveEvent
 
-class PostViewModel : ViewModel(), PostInteractionListener {
+class PostViewModel(
+    application: Application
+) : AndroidViewModel(application), PostInteractionListener {
 
-    private val repository: PostRepository = PostRepositoryInMemory()
+    private val repository: PostRepository =
+        SharedPrefsPostRepository(application)
 
     val data by repository::data
 
