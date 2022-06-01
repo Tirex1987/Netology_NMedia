@@ -3,14 +3,10 @@ package ru.netology.nmedia.viewModel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import ru.netology.nmedia.Post
+import ru.netology.nmedia.data.Post
 import ru.netology.nmedia.adapter.PostInteractionListener
 import ru.netology.nmedia.data.FilePostRepository
 import ru.netology.nmedia.data.PostRepository
-import ru.netology.nmedia.data.PostRepositoryInMemory
-import ru.netology.nmedia.data.SharedPrefsPostRepository
 import ru.netology.nmedia.utils.SingleLiveEvent
 
 class PostViewModel(
@@ -23,15 +19,16 @@ class PostViewModel(
     val data by repository::data
 
     val sharePostContent = SingleLiveEvent<String>()
-    val navigateToPostContentScreenEvent = SingleLiveEvent<Post?>()
+    //val navigateToPostContentScreenEvent = SingleLiveEvent<Post?>()
+    val navigateToPostContentScreenEvent = SingleLiveEvent<String>()
     val playVideoContent = SingleLiveEvent<String>()
 
-//    private val currentPost = MutableLiveData<Post?>(null)
+    private val currentPost = MutableLiveData<Post?>(null)
 
     fun onSaveButtonClicked(content: String) {
         if (content.isBlank()) return
 
-        val post = navigateToPostContentScreenEvent.value?.copy(
+        val post = currentPost.value?.copy(
             content = content
         ) ?: Post(
             id = PostRepository.NEW_POST_ID,
@@ -40,11 +37,11 @@ class PostViewModel(
             published = "Today"
         )
         repository.save(post)
-        //currentPost.value = null
+        currentPost.value = null
     }
 
     fun onAddClicked() {
-        navigateToPostContentScreenEvent.value = null
+        navigateToPostContentScreenEvent.call()
     }
 
     // region PostInteractionListener
@@ -61,7 +58,8 @@ class PostViewModel(
         repository.delete(post.id)
 
     override fun onEditClicked(post: Post) {
-        navigateToPostContentScreenEvent.value = post
+        currentPost.value = post
+        navigateToPostContentScreenEvent.value = post.content
     }
 
     override fun onPlayClicked(post: Post) {

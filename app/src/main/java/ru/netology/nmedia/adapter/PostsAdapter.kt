@@ -1,23 +1,16 @@
 package ru.netology.nmedia.adapter
 
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import android.widget.TextView
 import androidx.annotation.DrawableRes
-import androidx.constraintlayout.widget.Group
-import androidx.core.view.get
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
-import ru.netology.nmedia.Post
+import ru.netology.nmedia.data.Post
 import ru.netology.nmedia.R
-import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.databinding.CardPostBinding
-import ru.netology.nmedia.utils.VideoPreview
 import ru.netology.nmedia.utils.setVideoPreview
 
 //typealias onLikeClicked = (post: Post) -> Unit
@@ -87,10 +80,6 @@ internal class PostsAdapter (
                 }
             }
         }
-
-        @DrawableRes
-        private fun getLikeIconResId(liked: Boolean) =
-            if (liked) R.drawable.ic_liked_24dp else R.drawable.ic_likes_24dp
 
         private fun getAmountFormat(amount: Int): String = when {
             amount >= 1_000_000 -> "%.1f".format((amount / 100_000) / 10.0) + "M"

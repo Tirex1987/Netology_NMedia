@@ -9,7 +9,6 @@ import com.google.gson.Gson
 import com.google.gson.JsonIOException
 import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
-import ru.netology.nmedia.Post
 import ru.netology.nmedia.R
 import kotlin.properties.Delegates
 
