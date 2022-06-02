@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.FeedFragmentBinding
@@ -45,12 +45,8 @@ class FeedFragment : Fragment() {
         }
 
         viewModel.navigateToPostContentScreenEvent.observe(this) { initialContent ->
-            //postContentActivityLauncher.launch(currentPost?.content)
-            parentFragmentManager.commit {
-                val fragment = PostContentFragment.createInstance(initialContent)
-                replace(R.id.fragmentContainer, fragment)
-                addToBackStack(null)
-            }
+            val direction = FeedFragmentDirections.toPostContentFragment(initialContent)
+            findNavController().navigate(direction)
         }
 
         viewModel.playVideoContent.observe(this) { url ->
@@ -79,9 +75,4 @@ class FeedFragment : Fragment() {
             viewModel.onAddClicked()
         }
     }.root
-
-    companion object {
-        const val TAG = "FeedFragment"
-    }
-
 }

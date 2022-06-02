@@ -5,12 +5,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import ru.netology.nmedia.databinding.PostContentFragmentBinding
 
 class PostContentFragment : Fragment() {
 
-    private val initialContent
-        get() = requireArguments().getString(INITIAL_CONTENT_ARGUMENTS_KEY)
+    private val args by navArgs<PostContentFragmentArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -18,7 +19,7 @@ class PostContentFragment : Fragment() {
         savedInstanceState: Bundle?
     ) = PostContentFragmentBinding.inflate(layoutInflater, container, false).also { binding ->
 
-        binding.edit.setText(initialContent)
+        binding.edit.setText(args.initialContent)
 
         binding.edit.requestFocus()
         binding.ok.setOnClickListener{
@@ -33,20 +34,11 @@ class PostContentFragment : Fragment() {
             resultBundle.putString(RESULT_KEY, text.toString())
             setFragmentResult(REQUEST_KEY, resultBundle)
         }
-        parentFragmentManager.popBackStack()
+        findNavController().popBackStack()
     }
-
 
     companion object{
         const val RESULT_KEY = "postNewContent"
         const val REQUEST_KEY = "postContentRequestKey"
-
-        const val INITIAL_CONTENT_ARGUMENTS_KEY = "initialContent"
-
-        fun createInstance(initialContent: String?) = PostContentFragment().apply {
-            arguments = Bundle(1).also {
-                it.putString(INITIAL_CONTENT_ARGUMENTS_KEY, initialContent)
-            }
-        }
     }
 }
