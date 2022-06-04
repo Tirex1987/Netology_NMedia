@@ -14,4 +14,4 @@ data class Post (
     val views: Int = 0,
     val videoUrl: String? = null,
     val videoTitle: String? = null
-)
+) : java.io.Serializable

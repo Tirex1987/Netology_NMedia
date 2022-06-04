@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.data.Post
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.CardPostBinding
+import ru.netology.nmedia.utils.setTextAmountFormat
 import ru.netology.nmedia.utils.setVideoPreview
 
 //typealias onLikeClicked = (post: Post) -> Unit
@@ -55,6 +56,7 @@ internal class PostsAdapter (
         init {
             binding.likes.setOnClickListener{ interactionListener.onLikeClicked(post) }
             binding.shares.setOnClickListener{ interactionListener.onShareClicked(post) }
+            binding.constraintLayoutPost.setOnClickListener { interactionListener.onPostClicked(post) }
         }
 
         fun bind(post: Post) {
@@ -63,9 +65,9 @@ internal class PostsAdapter (
                 authorName.text = post.author
                 content.text = post.content
                 published.text = post.published
-                likes.text = getAmountFormat(post.likes)
-                shares.text = getAmountFormat(post.share)
-                views.text = getAmountFormat(post.views)
+                likes.setTextAmountFormat(post.likes)
+                shares.setTextAmountFormat(post.share)
+                views.setTextAmountFormat(post.views)
                 options.setOnClickListener { popupMenu.show() }
                 avatar.setImageResource(R.drawable.ic_launcher_foreground)
                 likes.isChecked = post.likedByMe
@@ -79,13 +81,6 @@ internal class PostsAdapter (
                     video.setOnClickListener{ play.callOnClick() }
                 }
             }
-        }
-
-        private fun getAmountFormat(amount: Int): String = when {
-            amount >= 1_000_000 -> "%.1f".format((amount / 100_000) / 10.0) + "M"
-            amount >= 10_000 -> "${amount / 1_000}K"
-            amount >= 1_000 -> "%.1f".format((amount / 100) / 10.0) + "K"
-            else -> "$amount"
         }
     }
 
