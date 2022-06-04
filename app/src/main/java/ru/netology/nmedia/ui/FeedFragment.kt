@@ -27,16 +27,6 @@ class FeedFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         setFragmentResultListener(
-            requestKey = PostContentFragment.REQUEST_KEY
-        ) { requestKey, bundle ->
-            if (requestKey != PostContentFragment.REQUEST_KEY) return@setFragmentResultListener
-            val newPostContent = bundle.getString(
-                PostContentFragment.RESULT_KEY
-            ) ?: return@setFragmentResultListener
-            viewModel.onSaveButtonClicked(newPostContent)
-        }
-
-        setFragmentResultListener(
             requestKey = OpenPostFragment.REQUEST_KEY
         ) { requestKey, bundle ->
             val post = bundle.getSerializable(OpenPostFragment.RESULT_POST) as Post
@@ -97,4 +87,18 @@ class FeedFragment : Fragment() {
             startActivity(intent)
         }
     }.root
+
+    override fun onResume() {
+        super.onResume()
+
+        setFragmentResultListener(
+            requestKey = PostContentFragment.REQUEST_KEY
+        ) { requestKey, bundle ->
+            if (requestKey != PostContentFragment.REQUEST_KEY) return@setFragmentResultListener
+            val newPostContent = bundle.getString(
+                PostContentFragment.RESULT_KEY
+            ) ?: return@setFragmentResultListener
+            viewModel.onSaveButtonClicked(newPostContent)
+        }
+    }
 }
