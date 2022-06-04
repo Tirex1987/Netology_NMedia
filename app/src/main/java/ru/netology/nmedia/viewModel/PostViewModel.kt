@@ -25,11 +25,13 @@ class PostViewModel(
     val data by repository::data
 
     val sharePostContent = SingleLiveEvent<String>()
-    val navigateToPostContentScreenEvent = SingleLiveEvent<String>()
+    val navigateToPostContentScreenEvent = SingleLiveEvent<Pair<String, Boolean>>()
     val navigateToOpenPostScreenEvent = SingleLiveEvent<Post>()
     val playVideoContent = SingleLiveEvent<String>()
 
     private val currentPost = MutableLiveData<Post?>(null)
+
+    private var enteredTextForPost: String? = null
 
     fun onSaveButtonClicked(content: String) {
         if (content.isBlank()) return
@@ -44,14 +46,19 @@ class PostViewModel(
         )
         repository.save(post)
         currentPost.value = null
+        enteredTextForPost = null
     }
 
     fun onAddClicked() {
-        navigateToPostContentScreenEvent.call()
+        navigateToPostContentScreenEvent.value = (Pair(enteredTextForPost ?: "", true))
     }
 
     fun onChangePost(post: Post) {
         repository.save(post)
+    }
+
+    fun saveEnteredText(text: String) {
+        enteredTextForPost = text
     }
 
     // region PostInteractionListener
@@ -69,7 +76,7 @@ class PostViewModel(
 
     override fun onEditClicked(post: Post) {
         currentPost.value = post
-        navigateToPostContentScreenEvent.value = post.content
+        navigateToPostContentScreenEvent.value = Pair(post.content, false)
     }
 
     override fun onPlayClicked(post: Post) {

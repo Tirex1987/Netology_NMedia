@@ -24,6 +24,9 @@
             android:name="initialContent"
             app:argType="string"
             app:nullable="true" />
+        <argument
+            android:name="isNewPost"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/openPostFragment"

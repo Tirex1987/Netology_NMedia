@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
@@ -37,6 +38,16 @@ class FeedFragment : Fragment() {
                 viewModel.onChangePost(post)
             }
         }
+
+        setFragmentResultListener(
+            requestKey = PostContentFragment.ENTERED_TEXT_REQUEST_KEY
+        ) { requestKey, bundle ->
+            if (requestKey != PostContentFragment.ENTERED_TEXT_REQUEST_KEY) return@setFragmentResultListener
+            val enteredText = bundle.getString(
+                PostContentFragment.RESULT_KEY
+            ) ?: return@setFragmentResultListener
+            viewModel.saveEnteredText(enteredText)
+        }
     }
 
     override fun onCreateView(
@@ -68,8 +79,8 @@ class FeedFragment : Fragment() {
             startActivity(shareIntent)
         }
 
-        viewModel.navigateToPostContentScreenEvent.observe(viewLifecycleOwner) { initialContent ->
-            val direction = FeedFragmentDirections.toPostContentFragment(initialContent)
+        viewModel.navigateToPostContentScreenEvent.observe(viewLifecycleOwner) { pair ->
+            val direction = FeedFragmentDirections.toPostContentFragment(pair.first, pair.second)
             findNavController().navigate(direction)
         }
 
