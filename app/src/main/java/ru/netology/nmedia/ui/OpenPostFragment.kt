@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -131,6 +132,13 @@ class OpenPostFragment : Fragment() {
             startActivity(intent)
         }
 
+        requireActivity().onBackPressedDispatcher.addCallback(this){
+            if (resultBundle.isEmpty) {
+                resultBundle.putSerializable(RESULT_POST, getCurrentPost())
+                setFragmentResult(REQUEST_KEY, resultBundle)
+            }
+            findNavController().popBackStack()
+        }
     }.root
 
     private fun getCurrentPost() = requireNotNull(viewModel.data.value?.find { it.id == receivedPost.id }) {
@@ -141,13 +149,5 @@ class OpenPostFragment : Fragment() {
         const val REQUEST_KEY = "openPostResultKey"
         const val REMOVE_POST_KEY = "removePost"
         const val RESULT_POST = "openPost"
-    }
-
-    override fun onDestroy() {
-        if (resultBundle.isEmpty) {
-            resultBundle.putSerializable(RESULT_POST, getCurrentPost())
-            setFragmentResult(REQUEST_KEY, resultBundle)
-        }
-        super.onDestroy()
     }
 }
