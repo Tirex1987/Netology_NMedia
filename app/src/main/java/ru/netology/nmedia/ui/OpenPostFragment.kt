@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
@@ -48,6 +49,14 @@ class OpenPostFragment : Fragment() {
             ) ?: return@setFragmentResultListener
             viewModel.onSaveButtonClicked(newPostContent)
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                resultBundle.putSerializable(RESULT_POST, getCurrentPost())
+                setFragmentResult(REQUEST_KEY, resultBundle)
+                findNavController().popBackStack()
+            }
+        })
     }
 
     override fun onCreateView(
@@ -143,13 +152,5 @@ class OpenPostFragment : Fragment() {
         const val REQUEST_KEY = "openPostResultKey"
         const val REMOVE_POST_KEY = "removePost"
         const val RESULT_POST = "openPost"
-    }
-
-    override fun onDestroy() {
-        if (resultBundle.isEmpty) {
-            resultBundle.putSerializable(RESULT_POST, getCurrentPost())
-            setFragmentResult(REQUEST_KEY, resultBundle)
-        }
-        super.onDestroy()
     }
 }
