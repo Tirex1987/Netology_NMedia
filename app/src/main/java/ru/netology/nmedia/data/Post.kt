@@ -1,5 +1,8 @@
-package ru.netology.nmedia
+package ru.netology.nmedia.data
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Post (
     val id: Long,
     val author: String,
@@ -11,4 +14,4 @@ data class Post (
     val views: Int = 0,
     val videoUrl: String? = null,
     val videoTitle: String? = null
-)
+) : java.io.Serializable
