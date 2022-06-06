@@ -1,4 +1,4 @@
-package ru.netology.nmedia.service
+package ru.netology.nmedia.service.actions
 
 import com.google.gson.annotations.SerializedName
 
