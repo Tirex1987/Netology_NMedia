@@ -1,30 +1,41 @@
 package ru.netology.nmedia.viewModel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import ru.netology.nmedia.Post
+import ru.netology.nmedia.data.Post
 import ru.netology.nmedia.adapter.PostInteractionListener
 import ru.netology.nmedia.data.PostRepository
-import ru.netology.nmedia.data.PostRepositoryInMemory
+import ru.netology.nmedia.data.PostRepositoryImpl
+import ru.netology.nmedia.db.AppDb
 import ru.netology.nmedia.utils.SingleLiveEvent
 
-class PostViewModel : ViewModel(), PostInteractionListener {
+class PostViewModel(
+    application: Application
+) : AndroidViewModel(application), PostInteractionListener {
 
-    private val repository: PostRepository = PostRepositoryInMemory()
+    private val repository: PostRepository =
+        PostRepositoryImpl(
+            dao = AppDb.getInstance(
+                context = application
+            ).postDao
+        )
 
     val data by repository::data
 
     val sharePostContent = SingleLiveEvent<String>()
-    val navigateToPostContentScreenEvent = SingleLiveEvent<Post?>()
+    val navigateToPostContentScreenEvent = SingleLiveEvent<Pair<String, Boolean>>()
+    val navigateToOpenPostScreenEvent = SingleLiveEvent<Post>()
     val playVideoContent = SingleLiveEvent<String>()
 
-//    private val currentPost = MutableLiveData<Post?>(null)
+    private val currentPost = MutableLiveData<Post?>(null)
+
+    private var enteredTextForPost: String? = null
 
     fun onSaveButtonClicked(content: String) {
         if (content.isBlank()) return
 
-        val post = navigateToPostContentScreenEvent.value?.copy(
+        val post = currentPost.value?.copy(
             content = content
         ) ?: Post(
             id = PostRepository.NEW_POST_ID,
@@ -33,11 +44,20 @@ class PostViewModel : ViewModel(), PostInteractionListener {
             published = "Today"
         )
         repository.save(post)
-        //currentPost.value = null
+        currentPost.value = null
+        enteredTextForPost = null
     }
 
     fun onAddClicked() {
-        navigateToPostContentScreenEvent.value = null
+        navigateToPostContentScreenEvent.value = (Pair(enteredTextForPost ?: "", true))
+    }
+
+    fun onChangePost(post: Post) {
+        repository.save(post)
+    }
+
+    fun saveEnteredText(text: String) {
+        enteredTextForPost = text
     }
 
     // region PostInteractionListener
@@ -54,11 +74,16 @@ class PostViewModel : ViewModel(), PostInteractionListener {
         repository.delete(post.id)
 
     override fun onEditClicked(post: Post) {
-        navigateToPostContentScreenEvent.value = post
+        currentPost.value = post
+        navigateToPostContentScreenEvent.value = Pair(post.content, false)
     }
 
     override fun onPlayClicked(post: Post) {
         playVideoContent.value = post.videoUrl ?: return
+    }
+
+    override fun onPostClicked(post: Post) {
+        navigateToOpenPostScreenEvent.value = post
     }
 
     // endregion PostInteractionListener
