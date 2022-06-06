@@ -17,4 +17,7 @@
     <string name="chooser_play_video">Play video</string>
     <string name="json_read_exception">Error: incorrect data in the posts file. A new file will be created, data will be lost.</string>
     <string name="json_io_exception">Error reading posts file. A new file will be created, data will be lost.</string>
+    <string name="notification_user_liked">User %1$s liked %2$s\'s post</string>
+    <string name="channel_remote_name">Server notifications</string>
+    <string name="channel_remote_description">Notifications from remote server</string>
 </resources>

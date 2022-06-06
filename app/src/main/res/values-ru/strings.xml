@@ -17,4 +17,7 @@
     <string name="chooser_play_video">Открыть видео</string>
     <string name="json_read_exception">Ошибка: неверные данные в файле постов. Будет создан новый файл, данные будут утеряны</string>
     <string name="json_io_exception">Ошибка чтения файла постов. Будет создан новый файл, данные будут утеряны</string>
+    <string name="notification_user_liked">User %1$s liked %2$s\'s post</string>
+    <string name="channel_remote_name">Server notifications</string>
+    <string name="channel_remote_description">Notifications from remote server</string>
 </resources>
